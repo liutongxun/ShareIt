@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.liu</groupId>
-        <artifactId>ShareIt</artifactId>
+        <artifactId>share-club-subject</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>share-club-subject</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>share-club-subject-api</module>
-        <module>share-club-starter</module>
-        <module>share-club-infra</module>
-        <module>share-club-domain</module>
-        <module>share-club-common</module>
-        <module>share-club-application</module>
-    </modules>
+    <artifactId>share-club-common</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
