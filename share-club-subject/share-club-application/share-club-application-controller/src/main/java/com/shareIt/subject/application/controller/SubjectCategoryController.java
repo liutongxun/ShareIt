@@ -34,9 +34,13 @@ public class SubjectCategoryController {
     @PostMapping("/add")
     public Result<Boolean> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
 
-        SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDtoToCategoryBO(subjectCategoryDTO);
-        subjectCategoryDomainService.add(subjectCategoryBO);
-        return Result.ok(true);
+        try {
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDtoToCategoryBO(subjectCategoryDTO);
+            subjectCategoryDomainService.add(subjectCategoryBO);
+            return Result.ok(true);
+        }catch (Exception e){
+            return Result.ok(false);
+        }
 
     }
 

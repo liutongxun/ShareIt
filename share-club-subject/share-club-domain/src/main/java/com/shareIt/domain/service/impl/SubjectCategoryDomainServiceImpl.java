@@ -6,9 +6,11 @@ import com.shareIt.domain.service.SubjectCategoryDomainService;
 import com.shareIt.subject.infra.basic.entity.SubjectCategory;
 import com.shareIt.subject.infra.basic.service.SubjectCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Service
 public class SubjectCategoryDomainServiceImpl
                                     implements SubjectCategoryDomainService {
 
