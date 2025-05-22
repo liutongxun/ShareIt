@@ -1,5 +1,6 @@
 package com.shareIt.subject.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.shareIt.domain.entity.SubjectCategoryBO;
 import com.shareIt.domain.service.SubjectCategoryDomainService;
@@ -35,10 +36,14 @@ public class SubjectCategoryController {
     public Result<Boolean> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
 
         try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.add.dto:{}",  JSON.toJSONString(subjectCategoryDTO));
+            }
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDtoToCategoryBO(subjectCategoryDTO);
             subjectCategoryDomainService.add(subjectCategoryBO);
             return Result.ok(true);
         }catch (Exception e){
+            log.error("SubjectCategoryController.add.error:{}", e.getMessage(), e);
             return Result.ok(false);
         }
 
