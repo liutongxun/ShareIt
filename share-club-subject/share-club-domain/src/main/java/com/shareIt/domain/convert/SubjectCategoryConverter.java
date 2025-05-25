@@ -5,12 +5,22 @@ import com.shareIt.subject.infra.basic.entity.SubjectCategory;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface SubjectCategoryConverter {
 
     SubjectCategoryConverter INSTANCE =
                         Mappers.getMapper(SubjectCategoryConverter.class);
 
-    // 将 SubjectCategoryBO 转换为 SubjectCategory
+    // convert SubjectCategoryBO to SubjectCategory
     SubjectCategory convertBoToCategory(SubjectCategoryBO subjectCategoryBO);
+
+
+//    SubjectCategoryBO convertCategoryToBo(SubjectCategory subjectCategory);
+
+
+    List<SubjectCategoryBO> convertCategoryToBo(List<SubjectCategory> categoryList);
+
+
 }

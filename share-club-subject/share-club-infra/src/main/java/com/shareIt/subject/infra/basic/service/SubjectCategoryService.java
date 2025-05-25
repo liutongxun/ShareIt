@@ -1,6 +1,8 @@
 package com.shareIt.subject.infra.basic.service;
 
 import com.shareIt.subject.infra.basic.entity.SubjectCategory;
+
+import java.util.List;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 
@@ -53,4 +55,5 @@ public interface SubjectCategoryService {
      */
     boolean deleteById(Integer id);
 
+    List<SubjectCategory> queryPrimaryCategory(SubjectCategory subjectCategory);
 }

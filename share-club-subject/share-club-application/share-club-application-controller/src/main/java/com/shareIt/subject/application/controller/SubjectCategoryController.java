@@ -2,6 +2,7 @@ package com.shareIt.subject.application.controller;
 
 
 
+import com.shareIt.subject.infra.basic.entity.SubjectCategory;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * controller for classification of practice questions
@@ -72,7 +74,6 @@ public class SubjectCategoryController {
                 log.info("SubjectCategoryController.add.dto:{}",
                                                     JSON.toJSONString(subjectCategoryDTO));
             }
-            System.out.println(" subjectCategoryDTO.getCategoryType(),"+ subjectCategoryDTO.getCategoryType());
             Preconditions.checkNotNull(
                     subjectCategoryDTO.getCategoryType(),
                     "Category type must not be null"
@@ -93,6 +94,25 @@ public class SubjectCategoryController {
         }catch (Exception e){
             log.error("SubjectCategoryController.add.error:{}", e.getMessage(), e);
             return Result.fail(e.getMessage());
+        }
+
+    }
+
+    /**
+     * 查询岗位大类
+     */
+    @PostMapping("/queryPrimaryCategory")
+    public Result<List<SubjectCategoryDTO>> queryPrimaryCategory() {
+        try {
+            List<SubjectCategoryBO>  subjectCategoryBOList = subjectCategoryDomainService.queryPrimaryCategory();
+
+            List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.
+                    convertBoToCategoryDTOList(subjectCategoryBOList);
+
+            return Result.ok(subjectCategoryDTOList);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.queryPrimaryCategory.error:{}", e.getMessage(), e);
+            return Result.fail("查询失败");
         }
 
     }
