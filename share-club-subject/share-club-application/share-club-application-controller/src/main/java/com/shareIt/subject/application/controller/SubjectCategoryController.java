@@ -99,8 +99,23 @@ public class SubjectCategoryController {
     }
 
     /**
-     * 查询岗位大类
+     * Query Question Categories
      */
+    @Operation(
+            summary     = "Query primary categories",
+            description = "Returns a list of all top-level subject categories"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description  = "Request successful",
+                    content      = @Content(
+                            mediaType = "application/json",
+                            schema    = @Schema(type = "array", implementation = SubjectCategoryDTO.class)
+                    )
+            ),
+            @ApiResponse(responseCode = "500", description = "Query failed")
+    })
     @PostMapping("/queryPrimaryCategory")
     public Result<List<SubjectCategoryDTO>> queryPrimaryCategory() {
         try {
@@ -112,7 +127,7 @@ public class SubjectCategoryController {
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
             log.error("SubjectCategoryController.queryPrimaryCategory.error:{}", e.getMessage(), e);
-            return Result.fail("查询失败");
+            return Result.fail("Query failed");
         }
 
     }
