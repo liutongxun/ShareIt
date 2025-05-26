@@ -122,7 +122,7 @@ public class SubjectCategoryController {
             List<SubjectCategoryBO>  subjectCategoryBOList = subjectCategoryDomainService.queryPrimaryCategory();
 
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.
-                    convertBoToCategoryDTOList(subjectCategoryBOList);
+                    convertBoListToDtoList(subjectCategoryBOList);
 
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
@@ -131,5 +131,35 @@ public class SubjectCategoryController {
         }
 
     }
+
+    /**
+     * Query secondary categories by category ID
+     */
+    @PostMapping("/queryCategoryByPrimary")
+    public Result<List<SubjectCategoryDTO>> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO
+                                                                                    subjectCategoryDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.queryCategoryByPrimary.dto:{}"
+                        , JSON.toJSONString(subjectCategoryDTO));
+            }
+            Preconditions.checkNotNull(subjectCategoryDTO.getId() ,
+                                            "Category ID cannot be null.");
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDtoToCategoryBO(subjectCategoryDTO);
+
+            System.out.println("subjectCategoryDTO     " + JSON.toJSONString(subjectCategoryDTO));
+            System.out.println("subjectCategoryBO    。。。。。。。"+JSON.toJSONString(subjectCategoryBO));
+            List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
+            List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.
+                    convertBoListToDtoList(subjectCategoryBOList);
+            return Result.ok(subjectCategoryDTOList);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.queryPrimaryCategory.error:{}", e.getMessage(), e);
+            return Result.fail("Query failed");
+        }
+    }
+
+
 
 }

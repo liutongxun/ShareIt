@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 题目分类
+ * Question Categories
  *
- * @author: ChickenWing
- * @date: 2023/10/3
+ * @author: Liu Tongxun
+ * @date: 2025/5/24
  */
 @Data
 @Schema(
@@ -23,7 +23,7 @@ public class SubjectCategoryDTO implements Serializable {
             description = "Unique identifier of the category (auto-generated)",
             example     = "1001"
     )
-    private Long id;
+    private Integer id;
 
     @Schema(
             description = "Name of the category",

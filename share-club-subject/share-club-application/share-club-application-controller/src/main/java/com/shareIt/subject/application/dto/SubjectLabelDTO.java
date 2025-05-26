@@ -7,8 +7,8 @@ import java.io.Serializable;
 /**
  * 题目标签dto
  *
- * @author: ChickenWing
- * @date: 2023/10/3
+ * @author: Liu Tongxun
+ * @date: 2025/5/24
  */
 @Data
 public class SubjectLabelDTO implements Serializable {

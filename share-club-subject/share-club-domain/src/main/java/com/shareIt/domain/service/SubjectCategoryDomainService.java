@@ -14,4 +14,5 @@ public interface SubjectCategoryDomainService {
      */
     List<SubjectCategoryBO> queryPrimaryCategory();
 
+    List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
 }

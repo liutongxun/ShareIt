@@ -48,9 +48,29 @@ public class SubjectCategoryDomainServiceImpl
 
         List<SubjectCategoryBO> subjectCategoryBOS = SubjectCategoryConverter
                                                                     .INSTANCE
-                                                                    .convertCategoryToBo(categoryList);
+                                                                    .convertCategoryListToBoList(categoryList);
 
         return subjectCategoryBOS;
+    }
+
+    @Override
+    public List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO) {
+
+        SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
+                .convertBoToCategory(subjectCategoryBO);
+
+        System.out.println("subjectCategory            "+JSON.toJSONString(subjectCategory));
+        List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategory(subjectCategory);
+
+        List<SubjectCategoryBO> boList = SubjectCategoryConverter.INSTANCE
+                .convertCategoryListToBoList(subjectCategoryList);
+
+        if (log.isInfoEnabled()) {
+            log.info("SubjectCategoryController.queryPrimaryCategory.boList:{}",
+                    JSON.toJSONString(boList));
+        }
+
+        return boList;
     }
 
 

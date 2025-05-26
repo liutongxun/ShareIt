@@ -31,6 +31,8 @@
             <version>1.4.2.Final</version>
         </dependency>
 
+
+
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
@@ -61,6 +63,8 @@
             <version>3.11</version>
         </dependency>
     </dependencies>
+
+
 
 
 

@@ -7,21 +7,28 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-/**
- * 题目分类dto转换器
- *
- * @author: ChickenWing
- * @date: 2023/10/8
- */
+
 @Mapper
 public interface SubjectCategoryDTOConverter {
 
     SubjectCategoryDTOConverter INSTANCE = Mappers.getMapper(SubjectCategoryDTOConverter.class);
+//
+//    List<SubjectCategoryDTO> convertBoToCategoryDTOList(List<SubjectCategoryBO> subjectCategoryDTO);
+//
+//    SubjectCategoryBO convertDtoToCategoryBO(SubjectCategoryDTO subjectCategoryDTO);
+//
+//    SubjectCategoryDTO convertBoToCategoryDTO(SubjectCategoryBO subjectCategoryBO);
 
-    List<SubjectCategoryDTO> convertBoToCategoryDTOList(List<SubjectCategoryBO> subjectCategoryDTO);
+    // 单对象映射：DTO → BO
+    SubjectCategoryBO convertDtoToCategoryBO(SubjectCategoryDTO dto);
 
-    SubjectCategoryBO convertDtoToCategoryBO(SubjectCategoryDTO subjectCategoryDTO);
+    // 单对象映射：BO → DTO
+    SubjectCategoryDTO convertBoToCategoryDTO(SubjectCategoryBO bo);
 
-    SubjectCategoryDTO convertBoToCategoryDTO(SubjectCategoryBO subjectCategoryBO);
+    // 列表映射：DTO 列表 → BO 列表
+    List<SubjectCategoryBO> convertDtoListToBoList(List<SubjectCategoryDTO> dtos);
+
+    // 列表映射：BO 列表 → DTO 列表
+    List<SubjectCategoryDTO> convertBoListToDtoList(List<SubjectCategoryBO> bos);
 
 }
