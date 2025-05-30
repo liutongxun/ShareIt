@@ -40,6 +40,13 @@ public interface SubjectCategoryDao {
     List<SubjectCategory>  queryPrimaryCategory(SubjectCategory subjectCategory);
 
 
+    /**
+     * Updates a SubjectCategory record.
+     *
+     * @param subjectCategory the SubjectCategory instance to update
+     * @return the updated SubjectCategory instance
+     */
+    int update(SubjectCategory subjectCategory);
 
 }
 

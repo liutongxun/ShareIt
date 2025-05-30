@@ -65,4 +65,9 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
     public List<SubjectCategory> queryCategory(SubjectCategory subjectCategory) {
         return subjectCategoryDao.queryPrimaryCategory(subjectCategory);
     }
+
+    @Override
+    public int update(SubjectCategory subjectCategory) {
+        return this.subjectCategoryDao.update(subjectCategory);
+    }
 }

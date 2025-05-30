@@ -135,6 +135,19 @@ public class SubjectCategoryController {
     /**
      * Query secondary categories by category ID
      */
+    @Operation(
+            summary     = "Query secondary categories by primary category ID",
+            description = "Retrieves a list of secondary SubjectCategoryDTOs based on the given primary category ID"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description  = "Query successful",
+                    content      = @Content(schema = @Schema(implementation = Result.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Primary category ID cannot be null or invalid"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/queryCategoryByPrimary")
     public Result<List<SubjectCategoryDTO>> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO
                                                                                     subjectCategoryDTO) {
@@ -143,13 +156,12 @@ public class SubjectCategoryController {
                 log.info("SubjectCategoryController.queryCategoryByPrimary.dto:{}"
                         , JSON.toJSONString(subjectCategoryDTO));
             }
+            System.out.printf("subjectCategoryDTO.getId() subjectCategoryDTO.getId() subjectCategoryDTO.getId() "+subjectCategoryDTO.getId() );
             Preconditions.checkNotNull(subjectCategoryDTO.getId() ,
                                             "Category ID cannot be null.");
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
                     convertDtoToCategoryBO(subjectCategoryDTO);
 
-            System.out.println("subjectCategoryDTO     " + JSON.toJSONString(subjectCategoryDTO));
-            System.out.println("subjectCategoryBO    。。。。。。。"+JSON.toJSONString(subjectCategoryBO));
             List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.
                     convertBoListToDtoList(subjectCategoryBOList);
@@ -158,6 +170,72 @@ public class SubjectCategoryController {
             log.error("SubjectCategoryController.queryPrimaryCategory.error:{}", e.getMessage(), e);
             return Result.fail("Query failed");
         }
+    }
+
+    /**
+     * Update an existing category
+     */
+    @Operation(
+            summary     = "Update an existing category",
+            description = "Updates the details of a subject category based on the provided DTO"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description  = "Category updated successfully",
+                    content      = @Content(schema = @Schema(implementation = Result.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input parameters or missing ID"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/update")
+    public Result<Boolean> update(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.update.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDtoToCategoryBO(subjectCategoryDTO);
+            Boolean result = subjectCategoryDomainService.update(subjectCategoryBO);
+            return Result.ok(result);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.update.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to update category.");
+        }
+
+    }
+
+    /**
+     * Delete a category
+     */
+    @Operation(
+            summary     = "Delete a category",
+            description = "Marks the specified subject category as deleted"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description  = "Category deleted successfully",
+                    content      = @Content(schema = @Schema(implementation = Result.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input parameters or missing ID"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/delete")
+    public Result<Boolean> delete(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.delete.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDtoToCategoryBO(subjectCategoryDTO);
+            Boolean result = subjectCategoryDomainService.delete(subjectCategoryBO);
+            return Result.ok(result);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.delete.error:{}", e.getMessage(), e);
+            return Result.fail("Category deletion failed");
+        }
+
     }
 
 

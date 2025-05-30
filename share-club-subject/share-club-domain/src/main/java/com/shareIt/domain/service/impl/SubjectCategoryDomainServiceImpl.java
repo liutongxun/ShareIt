@@ -5,6 +5,8 @@ import com.google.common.base.Preconditions;
 import com.shareIt.domain.convert.SubjectCategoryConverter;
 import com.shareIt.domain.entity.SubjectCategoryBO;
 import com.shareIt.domain.service.SubjectCategoryDomainService;
+import com.shareIt.subject.common.enums.CategoryTypeEnum;
+import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectCategory;
 import com.shareIt.subject.infra.basic.service.SubjectCategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class SubjectCategoryDomainServiceImpl
         SubjectCategory subjectCategory = SubjectCategoryConverter.
                                                         INSTANCE.
                                                         convertBoToCategory(subjectCategoryBO);
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode() );
         subjectCategoryService.insert(subjectCategory);
     }
 
@@ -39,6 +42,8 @@ public class SubjectCategoryDomainServiceImpl
     public List<SubjectCategoryBO> queryPrimaryCategory() {
         SubjectCategory subjectCategory = new  SubjectCategory();
         subjectCategory.setParentId(0);
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        subjectCategory.setCategoryType(CategoryTypeEnum.PRIMARY.getCode());
         List<SubjectCategory> categoryList = subjectCategoryService.queryPrimaryCategory(subjectCategory);
         if (log.isInfoEnabled()) {
             log.info("SubjectCategoryDomainServiceImpl queryPrimaryCategory categoryList:{}", categoryList);
@@ -58,8 +63,9 @@ public class SubjectCategoryDomainServiceImpl
 
         SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
                 .convertBoToCategory(subjectCategoryBO);
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        subjectCategory.setCategoryType(CategoryTypeEnum.SECOND .getCode());
 
-        System.out.println("subjectCategory            "+JSON.toJSONString(subjectCategory));
         List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategory(subjectCategory);
 
         List<SubjectCategoryBO> boList = SubjectCategoryConverter.INSTANCE
@@ -72,6 +78,24 @@ public class SubjectCategoryDomainServiceImpl
 
         return boList;
     }
+
+    @Override
+    public Boolean update(SubjectCategoryBO subjectCategoryBO) {
+        SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
+                .convertBoToCategory(subjectCategoryBO);
+        int count = subjectCategoryService.update(subjectCategory);
+        return count > 0;
+    }
+
+    @Override
+    public Boolean delete(SubjectCategoryBO subjectCategoryBO) {
+        SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
+                .convertBoToCategory(subjectCategoryBO);
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.DELETED.getCode());
+         int count = subjectCategoryService.update(subjectCategory);
+        return count > 0;
+    }
+
 
 
 }
