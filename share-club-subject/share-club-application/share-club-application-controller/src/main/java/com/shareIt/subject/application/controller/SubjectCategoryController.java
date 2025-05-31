@@ -117,9 +117,12 @@ public class SubjectCategoryController {
             @ApiResponse(responseCode = "500", description = "Query failed")
     })
     @PostMapping("/queryPrimaryCategory")
-    public Result<List<SubjectCategoryDTO>> queryPrimaryCategory() {
+    public Result<List<SubjectCategoryDTO>> queryPrimaryCategory(@RequestBody SubjectCategoryDTO
+                                                                             subjectCategoryDTO) {
         try {
-            List<SubjectCategoryBO>  subjectCategoryBOList = subjectCategoryDomainService.queryPrimaryCategory();
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDtoToCategoryBO(subjectCategoryDTO);
+            List<SubjectCategoryBO>  subjectCategoryBOList = subjectCategoryDomainService.queryPrimaryCategory(subjectCategoryBO);
 
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.
                     convertBoListToDtoList(subjectCategoryBOList);
@@ -237,6 +240,8 @@ public class SubjectCategoryController {
         }
 
     }
+
+
 
 
 
