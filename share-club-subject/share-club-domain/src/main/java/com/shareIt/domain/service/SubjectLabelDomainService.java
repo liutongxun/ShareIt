@@ -29,6 +29,9 @@ public interface SubjectLabelDomainService {
      */
     Boolean update(SubjectLabelBO subjectLabelBO);
 
-
+    /**
+     * Delete label
+     */
+    Boolean delete(SubjectLabelBO subjectLabelBO);
 }
 

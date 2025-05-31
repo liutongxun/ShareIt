@@ -29,7 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/subject/label")
 @Slf4j
-public class SubjectLabelController {
+public class  SubjectLabelController {
 
 
     @Resource
@@ -76,6 +76,26 @@ public class SubjectLabelController {
             return Result.fail("Failed to update label");
         }
     }
+
+    /**
+     * Delete label
+     */
+    @PostMapping("/delete")
+    public Result<Boolean> delete(@RequestBody SubjectLabelDTO subjectLabelDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectLabelController.delete.dto:{}", JSON.toJSONString(subjectLabelDTO));
+            }
+            Preconditions.checkNotNull(subjectLabelDTO.getId(), "Label ID cannot be null");
+            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE.convertDtoToLabelBO(subjectLabelDTO);
+            Boolean result = subjectLabelDomainService.delete(subjectLabelBO);
+            return Result.ok(result);
+        } catch (Exception e) {
+            log.error("SubjectLabelController.delete.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to delete label");
+        }
+    }
+
 
 
 }
