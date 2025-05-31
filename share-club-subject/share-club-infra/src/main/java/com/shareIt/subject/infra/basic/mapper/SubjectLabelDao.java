@@ -16,5 +16,12 @@ import java.util.List;
 public interface SubjectLabelDao {
 
 
+    /**
+     * Insert a new record
+     *
+     * @param subjectLabel The SubjectLabel instance to insert
+     * @return Number of rows affected
+     */
+    int insert(SubjectLabel subjectLabel);
 
 }

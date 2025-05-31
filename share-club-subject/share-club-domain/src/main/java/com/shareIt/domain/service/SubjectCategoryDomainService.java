@@ -12,7 +12,7 @@ public interface SubjectCategoryDomainService {
     /**
      * Query Job Categories
      */
-    List<SubjectCategoryBO> queryPrimaryCategory();
+    List<SubjectCategoryBO> queryPrimaryCategory(SubjectCategoryBO subjectCategoryBO);
 
     List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
 

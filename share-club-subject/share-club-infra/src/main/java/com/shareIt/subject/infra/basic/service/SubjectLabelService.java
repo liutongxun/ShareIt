@@ -16,4 +16,5 @@ import java.util.List;
 public interface SubjectLabelService {
 
 
+    int insert(SubjectLabel subjectLabel);
 }

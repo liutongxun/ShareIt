@@ -5,30 +5,33 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 题目标签dto
+ * Subject Label DTO
  *
- * @author: Liu Tongxun
- * @date: 2025/5/24
+ * @author Liu Tongxun
+ * @date 2025/5/24
  */
 @Data
 public class SubjectLabelDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
-    
+
     /**
-     * 分类id
+     * Category ID
      */
     private Long categoryId;
-    
+
     /**
-     * 标签分类
+     * Label name
      */
     private String labelName;
+
     /**
-     * 排序
+     * Sort number
      */
     private Integer sortNum;
 

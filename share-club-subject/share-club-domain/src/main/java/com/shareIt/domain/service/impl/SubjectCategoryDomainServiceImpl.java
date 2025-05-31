@@ -39,8 +39,9 @@ public class SubjectCategoryDomainServiceImpl
     }
 
     @Override
-    public List<SubjectCategoryBO> queryPrimaryCategory() {
-        SubjectCategory subjectCategory = new  SubjectCategory();
+    public List<SubjectCategoryBO> queryPrimaryCategory(SubjectCategoryBO subjectCategoryBO) {
+        SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
+                .convertBoToCategory(subjectCategoryBO);
         subjectCategory.setParentId(0);
         subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         subjectCategory.setCategoryType(CategoryTypeEnum.PRIMARY.getCode());
