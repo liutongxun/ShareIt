@@ -43,5 +43,15 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
         return count > 0;
     }
 
+    @Override
+    public Boolean update(SubjectLabelBO subjectLabelBO) {
+        if (log.isInfoEnabled()) {
+            log.info("SubjectLabelDomainServiceImpl.update.bo:{}", JSON.toJSONString(subjectLabelBO));
+        }
+        SubjectLabel subjectLabel = SubjectLabelConverter.INSTANCE
+                .convertBoToLabel(subjectLabelBO);
+        int count = subjectLabelService.update(subjectLabel);
+        return count > 0;
+    }
 
 }

@@ -17,4 +17,13 @@ public interface SubjectLabelService {
 
 
     int insert(SubjectLabel subjectLabel);
+
+    /**
+     * Modify data
+     *
+     * @param subjectLabel The SubjectLabel instance
+     * @return Number of rows affected
+     */
+    int update(SubjectLabel subjectLabel);
+
 }

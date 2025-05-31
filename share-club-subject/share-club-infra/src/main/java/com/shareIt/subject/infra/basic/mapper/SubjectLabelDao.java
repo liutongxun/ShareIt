@@ -23,5 +23,12 @@ public interface SubjectLabelDao {
      * @return Number of rows affected
      */
     int insert(SubjectLabel subjectLabel);
+    /**
+     * Update data
+     *
+     * @param subjectLabel The SubjectLabel instance
+     * @return Number of rows affected
+     */
+    int update(SubjectLabel subjectLabel);
 
 }

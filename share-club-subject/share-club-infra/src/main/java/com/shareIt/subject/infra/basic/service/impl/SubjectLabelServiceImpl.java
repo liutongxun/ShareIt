@@ -35,5 +35,10 @@ public class SubjectLabelServiceImpl implements SubjectLabelService {
 
         return insert;
     }
+
+    @Override
+    public int update(SubjectLabel subjectLabel) {
+        return this.subjectLabelDao.update(subjectLabel);
+    }
 }
 

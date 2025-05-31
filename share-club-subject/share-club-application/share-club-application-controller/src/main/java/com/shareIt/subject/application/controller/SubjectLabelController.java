@@ -47,12 +47,33 @@ public class SubjectLabelController {
             }
             Preconditions.checkArgument(!StringUtils.isBlank(subjectLabelDTO.getLabelName()),
                     "Label name cannot be empty");
-            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE.convertDtoToLabelBO(subjectLabelDTO);
+            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE.
+                                                convertDtoToLabelBO(subjectLabelDTO);
             Boolean result = subjectLabelDomainService.add(subjectLabelBO);
             return Result.ok(result);
         } catch (Exception e) {
             log.error("SubjectLabelController.add.error:{}", e.getMessage(), e);
             return Result.fail("Failed to add new label");
+        }
+    }
+
+    /**
+     * Update label
+     */
+    @PostMapping("/update")
+    public Result<Boolean> update(@RequestBody SubjectLabelDTO subjectLabelDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectLabelController.update.dto:{}", JSON.toJSONString(subjectLabelDTO));
+            }
+            Preconditions.checkNotNull(subjectLabelDTO.getId(), "Label ID cannot be null");
+            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE.
+                                        convertDtoToLabelBO(subjectLabelDTO);
+            Boolean result = subjectLabelDomainService.update(subjectLabelBO);
+            return Result.ok(result);
+        } catch (Exception e) {
+            log.error("SubjectLabelController.update.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to update label");
         }
     }
 

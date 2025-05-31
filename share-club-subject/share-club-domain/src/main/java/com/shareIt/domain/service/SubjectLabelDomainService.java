@@ -24,6 +24,11 @@ public interface SubjectLabelDomainService {
     Boolean add(SubjectLabelBO subjectLabelBO);
 
 
+    /**
+     * Update label
+     */
+    Boolean update(SubjectLabelBO subjectLabelBO);
+
 
 }
 
