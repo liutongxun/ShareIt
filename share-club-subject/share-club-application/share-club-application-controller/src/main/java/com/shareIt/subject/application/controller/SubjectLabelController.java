@@ -97,5 +97,30 @@ public class  SubjectLabelController {
     }
 
 
+    /**
+     * Query labels by category ID
+     */
+    @PostMapping("/queryLabelByCategoryId")
+    public Result<List<SubjectLabelDTO>> queryLabelByCategoryId(@RequestBody SubjectLabelDTO subjectLabelDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectLabelController.queryLabelByCategoryId.dto:{}",
+                        JSON.toJSONString(subjectLabelDTO));
+            }
+            Preconditions.checkNotNull(subjectLabelDTO.getCategoryId(), "Category ID cannot be null");
+            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE.
+                    convertDtoToLabelBO(subjectLabelDTO);
+
+            List<SubjectLabelBO> resultList = subjectLabelDomainService.queryLabelByCategoryId(subjectLabelBO);
+
+            List<SubjectLabelDTO> subjectLabelDTOS = SubjectLabelDTOConverter.INSTANCE.
+                                                         convertBOToLabelDTOList(resultList);
+            return Result.ok(subjectLabelDTOS);
+        } catch (Exception e) {
+            log.error("SubjectLabelController.queryLabelByCategoryId.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to query labels for the category");
+        }
+    }
+
 
 }

@@ -33,5 +33,11 @@ public interface SubjectLabelDomainService {
      * Delete label
      */
     Boolean delete(SubjectLabelBO subjectLabelBO);
+
+    /**
+     * Query labels under a category
+     */
+    List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO);
+
 }
 

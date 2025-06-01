@@ -7,6 +7,7 @@ import com.shareIt.subject.infra.basic.service.SubjectLabelService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Subject Label Service Implementation
@@ -39,6 +40,23 @@ public class SubjectLabelServiceImpl implements SubjectLabelService {
     @Override
     public int update(SubjectLabel subjectLabel) {
         return this.subjectLabelDao.update(subjectLabel);
+    }
+
+    @Override
+    public List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel) {
+        return this.subjectLabelDao.queryByCondition(subjectLabel);
+    }
+
+     /**
+     * Retrieve multiple records by a list of IDs.
+     *
+     * @param labelIdList List of SubjectLabel IDs
+     * @return List of matching SubjectLabel objects
+     *
+     */
+    @Override
+    public List<SubjectLabel> batchQueryById(List<Long> labelIdList) {
+        return this.subjectLabelDao.batchQueryById(labelIdList);
     }
 }
 

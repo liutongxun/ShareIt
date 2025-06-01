@@ -13,6 +13,13 @@ import java.util.List;
  */
 public interface SubjectMappingDao {
 
+    /**
+     * Query distinct label IDs based on given criteria
+     *
+     * @param subjectMapping Query criteria
+     * @return List of SubjectMapping instances with distinct labelId values
+     */
+    List<SubjectMapping> queryDistinctLabelId(SubjectMapping subjectMapping);
 
 
 }

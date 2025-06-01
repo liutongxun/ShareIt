@@ -31,4 +31,21 @@ public interface SubjectLabelDao {
      */
     int update(SubjectLabel subjectLabel);
 
+
+    /**
+     * Query rows by specified conditions
+     *
+     * @param subjectLabel Query criteria encapsulated as a SubjectLabel object
+     * @return List of matching SubjectLabel objects
+     */
+    List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel);
+
+
+    /**
+     * Batch query records by a list of IDs
+     *
+     * @param labelIdList List of label IDs
+     * @return List of matching SubjectLabel objects
+     */
+    List<SubjectLabel> batchQueryById(@Param("list") List<Long> labelIdList);
 }

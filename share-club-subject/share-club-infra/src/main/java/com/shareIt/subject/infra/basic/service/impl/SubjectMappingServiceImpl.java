@@ -24,6 +24,18 @@ import java.util.List;
 @Service("subjectMappingService")
 public class SubjectMappingServiceImpl implements SubjectMappingService {
 
+    @Resource
+    private SubjectMappingDao subjectMappingDao;
 
+     /**
+     * Query distinct label IDs based on given criteria
+     *
+     * @param subjectMapping Query criteria
+     * @return List of SubjectMapping instances with distinct labelId values
+     */
+    @Override
+    public List<SubjectMapping> queryLabelId(SubjectMapping subjectMapping) {
+        return this.subjectMappingDao.queryDistinctLabelId(subjectMapping);
+    }
 
 }
