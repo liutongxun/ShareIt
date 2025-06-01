@@ -3,7 +3,7 @@
 <mapper namespace="com.shareIt.subject.infra.basic.mapper.SubjectCategoryDao">
 
     <resultMap type="com.shareIt.subject.infra.basic.entity.SubjectCategory" id="SubjectCategoryMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
         <result property="categoryType" column="category_type" jdbcType="INTEGER"/>
         <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>

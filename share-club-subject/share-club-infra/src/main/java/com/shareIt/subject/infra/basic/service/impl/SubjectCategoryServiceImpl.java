@@ -29,7 +29,7 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
      * @return The instance object
      */
     @Override
-    public SubjectCategory queryById(Integer id) {
+    public SubjectCategory queryById(Long id) {
         return this.subjectCategoryDao.queryById(id);
     }
 

@@ -16,7 +16,7 @@ public class SubjectController {
 
     @GetMapping("/test")
     public String test(){
-        SubjectCategory subjectCategory = subjectCategoryService.queryById(1);
+        SubjectCategory subjectCategory = subjectCategoryService.queryById(1l);
         System.out.println(subjectCategory.getCategoryName()+" .........");
         System.out.println(subjectCategory.getCategoryType());
 

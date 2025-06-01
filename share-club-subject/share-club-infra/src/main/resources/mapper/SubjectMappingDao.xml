@@ -11,7 +11,7 @@
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_d  eleted" jdbcType="INTEGER"/>
     </resultMap>
 
 

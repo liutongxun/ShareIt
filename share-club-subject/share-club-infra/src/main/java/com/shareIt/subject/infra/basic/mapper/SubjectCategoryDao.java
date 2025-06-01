@@ -18,7 +18,7 @@ public interface SubjectCategoryDao {
      * @param id Primary key
      * @return The instance object
      */
-    SubjectCategory queryById(Integer id);
+    SubjectCategory queryById(Long id);
 
 
 

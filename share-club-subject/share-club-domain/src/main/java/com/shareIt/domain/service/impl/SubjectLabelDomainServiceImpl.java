@@ -76,7 +76,7 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
         // If the current category is a primary category, query all labels
         SubjectCategory subjectCategory = subjectCategoryService.
-                                    queryById(Math.toIntExact(subjectLabelBO.getCategoryId()));
+                                    queryById(subjectLabelBO.getCategoryId());
         if (CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()) {
             SubjectLabel subjectLabel = new SubjectLabel();
             subjectLabel.setCategoryId(subjectLabelBO.getCategoryId());
