@@ -38,4 +38,10 @@ public class SubjectMappingServiceImpl implements SubjectMappingService {
         return this.subjectMappingDao.queryDistinctLabelId(subjectMapping);
     }
 
+    @Override
+    public void batchInsert(List<SubjectMapping> mappingList) {
+        this.subjectMappingDao.insertBatch(mappingList);
+
+    }
+
 }

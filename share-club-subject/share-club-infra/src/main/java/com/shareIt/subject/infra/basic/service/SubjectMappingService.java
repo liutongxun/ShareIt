@@ -28,5 +28,11 @@ public interface SubjectMappingService {
      */
     List<SubjectMapping> queryLabelId(SubjectMapping subjectMapping);
 
+    /**
+     * Batch insert multiple SubjectMapping records
+     *
+     * @param mappingList the list of SubjectMapping objects to be inserted
+     */
+    void batchInsert(List<SubjectMapping> mappingList);
 
 }

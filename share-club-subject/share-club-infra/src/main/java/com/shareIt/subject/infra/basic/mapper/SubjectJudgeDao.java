@@ -1,6 +1,8 @@
 package com.shareIt.subject.infra.basic.mapper;
 
 
+import com.shareIt.subject.infra.basic.entity.SubjectJudge;
+
 /**
  * Data Access Layer for the True/False Question (SubjectJudge) Table
  *
@@ -12,6 +14,13 @@ package com.shareIt.subject.infra.basic.mapper;
 public interface SubjectJudgeDao {
 
 
+    /**
+     * Add new data
+     *
+     * @param subjectJudge Instance object
+     * @return Number of affected rows
+     */
+    int insert(SubjectJudge subjectJudge);
 
 }
 

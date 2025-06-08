@@ -18,6 +18,11 @@ import javax.annotation.Resource;
 @Service("subjectBriefService")
 public class SubjectBriefServiceImpl implements SubjectBriefService {
 
+    @Resource
+    private SubjectBriefDao subjectBriefDao;
 
-
+    @Override
+    public SubjectBrief insert(SubjectBrief subjectBrief) {
+        return null;
+    }
 }

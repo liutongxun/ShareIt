@@ -15,5 +15,11 @@
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
+    <!-- Add all columns -->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into subject_brief(subject_id, subject_answer, created_by, created_time, update_by, update_time, is_deleted)
+        values (#{subjectId}, #{subjectAnswer}, #{createdBy}, #{createdTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+    </insert>
+
 
 </mapper>

@@ -21,5 +21,13 @@ public interface SubjectMappingDao {
      */
     List<SubjectMapping> queryDistinctLabelId(SubjectMapping subjectMapping);
 
+    /**
+     * Batch insert data using MyBatis native foreach method
+     *
+     * @param entities List of SubjectMapping entity objects to be inserted
+     * @return number of rows affected
+     */
+    int insertBatch(@Param("entities") List<SubjectMapping> entities);
+
 
 }

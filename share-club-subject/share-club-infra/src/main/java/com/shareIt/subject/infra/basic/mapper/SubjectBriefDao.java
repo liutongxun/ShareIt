@@ -15,5 +15,13 @@ import java.util.List;
  */
 public interface SubjectBriefDao {
 
+    /**
+     * Add new data
+     *
+     * @param subjectBrief Instance object
+     * @return Number of affected rows
+     */
+    int insert(SubjectBrief subjectBrief);
+
 
 }

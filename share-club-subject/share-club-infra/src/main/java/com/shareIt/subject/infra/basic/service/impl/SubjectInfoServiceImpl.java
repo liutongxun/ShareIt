@@ -21,5 +21,12 @@ import java.util.List;
 @Service("subjectInfoService")
 public class SubjectInfoServiceImpl implements SubjectInfoService {
 
+    @Resource
+    private SubjectInfoDao subjectInfoDao;
 
+    @Override
+    public SubjectInfo insert(SubjectInfo subjectInfo) {
+        this.subjectInfoDao.insert(subjectInfo);
+        return subjectInfo;
+    }
 }

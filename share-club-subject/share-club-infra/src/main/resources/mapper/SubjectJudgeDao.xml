@@ -13,6 +13,12 @@
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
+    <!-- Add all columns -->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into subject_judge(subject_id, is_correct, created_by, created_time, update_by, update_time, is_deleted)
+        values (#{subjectId}, #{isCorrect}, #{createdBy}, #{createdTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+    </insert>
+
 
 
 </mapper>

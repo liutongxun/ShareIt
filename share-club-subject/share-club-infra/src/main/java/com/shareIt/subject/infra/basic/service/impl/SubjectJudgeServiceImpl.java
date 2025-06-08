@@ -1,7 +1,10 @@
 package com.shareIt.subject.infra.basic.service.impl;
 
 
+import com.shareIt.subject.infra.basic.entity.SubjectJudge;
+import com.shareIt.subject.infra.basic.mapper.SubjectJudgeDao;
 import com.shareIt.subject.infra.basic.service.SubjectJudgeService;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,5 +23,12 @@ import java.util.List;
 @Service("subjectJudgeService")
 public class SubjectJudgeServiceImpl implements SubjectJudgeService {
 
+    @Resource
+    private SubjectJudgeDao subjectJudgeDao;
 
+    @Override
+    public SubjectJudge insert(SubjectJudge subjectJudge) {
+        this.subjectJudgeDao.insert(subjectJudge);
+        return subjectJudge;
+    }
 }

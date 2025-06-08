@@ -16,4 +16,13 @@ import java.util.List;
 public interface SubjectInfoService {
 
 
+    /**
+     * Insert a new record
+     *
+     * @param subjectInfo the entity object to be inserted
+     * @return the inserted entity object
+     */
+    SubjectInfo insert(SubjectInfo subjectInfo);
+
+
 }

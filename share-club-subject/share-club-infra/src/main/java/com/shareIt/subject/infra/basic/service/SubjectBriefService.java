@@ -14,5 +14,13 @@ import com.shareIt.subject.infra.basic.entity.SubjectBrief;
 public interface SubjectBriefService {
 
 
+    /**
+     * Add new data
+     *
+     * @param subjectBrief Instance object
+     * @return Instance object
+     */
+    SubjectBrief insert(SubjectBrief subjectBrief);
+
 
 }

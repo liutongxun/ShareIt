@@ -1,6 +1,9 @@
 package com.shareIt.subject.infra.basic.service;
 
 
+import com.shareIt.subject.infra.basic.entity.SubjectRadio;
+
+import java.util.List;
 
 /**
  * Service Interface for the Single Choice Question Table (SubjectRadio)
@@ -10,5 +13,11 @@ package com.shareIt.subject.infra.basic.service;
  */
 public interface SubjectRadioService {
 
+    /**
+     * Batch insert multiple records
+     *
+     * @param subjectRadioList the list of SubjectRadio objects to be inserted
+     */
+    void batchInsert(List<SubjectRadio> subjectRadioList);
 
 }
