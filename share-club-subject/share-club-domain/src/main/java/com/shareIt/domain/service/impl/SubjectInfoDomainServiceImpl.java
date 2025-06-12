@@ -6,8 +6,10 @@ import com.shareIt.domain.entity.SubjectInfoBO;
 import com.shareIt.domain.hander.subject.SubjectTypeHandler;
 import com.shareIt.domain.hander.subject.SubjectTypeHandlerFactory;
 import com.shareIt.domain.service.SubjectInfoDomainService;
+import com.shareIt.subject.common.entity.PageResult;
 import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectInfo;
+import com.shareIt.subject.infra.basic.entity.SubjectLabel;
 import com.shareIt.subject.infra.basic.entity.SubjectMapping;
 import com.shareIt.subject.infra.basic.service.SubjectInfoService;
 import com.shareIt.subject.infra.basic.service.SubjectMappingService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,7 +50,18 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
         List<Integer> categoryIds = subjectInfoBO.getCategoryIds();
         List<Integer> labelIds = subjectInfoBO.getLabelIds();
-        List<SubjectMapping> mappingList = new LinkedList<>();
+
+        LinkedList<SubjectMapping> mappingList = new LinkedList<>();
+//        for (int cid = 0; cid < categoryIds.size(); cid++) {
+//            for (int lableId =0; lableId <labelIds.size(); lableId++){
+//                SubjectMapping mapping = new SubjectMapping();
+//                mapping.setSubjectId(subjectInfo.getId());
+//                mapping.setCategoryId(Long.valueOf(categoryIds.get(cid)));
+//                mapping.setLabelId(Long.valueOf(labelIds.get(lableId)));
+//                mapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+//                mappingList.add(mapping);
+//            }
+//        }
         categoryIds.forEach(categoryId -> {
             labelIds.forEach(labelId -> {
                 SubjectMapping subjectMapping = new SubjectMapping();
@@ -58,7 +72,30 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
                 mappingList.add(subjectMapping);
             });
         });
-        subjectMappingService.batchInsert(mappingList);
 
+        subjectMappingService.batchInsert(mappingList);
     }
+
+    @Override
+    public PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO) {
+        PageResult<SubjectInfoBO> pageResult = new PageResult<>();
+        pageResult.setPageNo(subjectInfoBO.getPageNo());
+        pageResult.setPageSize(subjectInfoBO.getPageSize());
+        int start = (subjectInfoBO.getPageNo() - 1) * subjectInfoBO.getPageSize();
+        SubjectInfo subjectInfo = SubjectInfoConverter.INSTANCE.convertBoToInfo(subjectInfoBO);
+        int count = subjectInfoService.countByCondition(subjectInfo, subjectInfoBO.getCategoryId()
+                , subjectInfoBO.getLabelId());
+        if (count == 0) {
+            return pageResult;
+        }
+        List<SubjectInfo> subjectInfoList = subjectInfoService.queryPage(subjectInfo, subjectInfoBO.getCategoryId()
+                , subjectInfoBO.getLabelId(), start, subjectInfoBO.getPageSize());
+        List<SubjectInfoBO> subjectInfoBOS = SubjectInfoConverter.INSTANCE.convertListInfoToBO(subjectInfoList);
+        pageResult.setRecords(subjectInfoBOS);
+        pageResult.setTotal(count);
+        return pageResult;
+    }
+
+
+
 }

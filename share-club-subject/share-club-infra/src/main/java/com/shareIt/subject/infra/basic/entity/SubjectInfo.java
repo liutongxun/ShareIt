@@ -32,7 +32,7 @@ public class SubjectInfo implements Serializable {
     /**
      * Question Difficulty
      */
-    private Integer subjectDifficulty;
+    private Integer subjectDifficult;
 
     /**
      * Author (Person who created the question)
@@ -83,4 +83,8 @@ public class SubjectInfo implements Serializable {
      * Number of Times the Question Has Been Attempted
      */
     private Integer subjectCount;
+
+    private String subjectParse;
+
 }
+

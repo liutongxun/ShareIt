@@ -8,6 +8,7 @@ import com.shareIt.domain.service.SubjectInfoDomainService;
 import com.shareIt.subject.application.convert.SubjectAnswerDTOConverter;
 import com.shareIt.subject.application.convert.SubjectInfoDTOConverter;
 import com.shareIt.subject.application.dto.SubjectInfoDTO;
+import com.shareIt.subject.common.entity.PageResult;
 import com.shareIt.subject.common.entity.Result;
 
 import lombok.extern.slf4j.Slf4j;
@@ -72,5 +73,28 @@ public class SubjectController {
             return Result.fail("Failed to add subject");
         }
     }
+
+    /**
+     * Query subject list with pagination
+     */
+    @PostMapping("/getSubjectPage")
+    public Result<PageResult<SubjectInfoDTO>> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.getSubjectPage.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "Category ID cannot be null");
+            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "Label ID cannot be null");
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDTOToBO(subjectInfoDTO);
+            subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo());
+            subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize());
+            PageResult<SubjectInfoBO> boPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
+            return Result.ok(boPageResult);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.add.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to retrieve subject list with pagination");
+        }
+    }
+
 
 }

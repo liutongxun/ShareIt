@@ -1,5 +1,6 @@
 package com.shareIt.domain.entity;
 
+import com.shareIt.subject.common.entity.PageInfo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.List;
  * Date: 2025/06/01
  */
 @Data
-public class SubjectInfoBO implements Serializable {
+public class SubjectInfoBO extends PageInfo implements Serializable {
 
     /**
      * Primary key
@@ -126,6 +127,8 @@ public class SubjectInfoBO implements Serializable {
      * ID of the previous subject
      */
     private Long lastSubjectId;
+
+
 }
 
 

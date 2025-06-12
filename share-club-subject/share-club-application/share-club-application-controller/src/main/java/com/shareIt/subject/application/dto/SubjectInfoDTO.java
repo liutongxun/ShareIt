@@ -1,6 +1,8 @@
 package com.shareIt.subject.application.dto;
 
+import com.shareIt.subject.common.entity.PageInfo;
 import lombok.Data;
+import org.springframework.data.domain.PageRequest;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  * @date 2025/06/01
  */
 @Data
-public class SubjectInfoDTO implements Serializable {
+public class SubjectInfoDTO extends PageInfo implements Serializable {
 
     /**
      * Primary key

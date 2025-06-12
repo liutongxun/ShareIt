@@ -6,6 +6,8 @@ import com.shareIt.subject.infra.basic.entity.SubjectInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * Subject Info Converter Interface
  *
@@ -29,4 +31,5 @@ public interface SubjectInfoConverter {
      */
     SubjectInfo convertBoToInfo(SubjectInfoBO subjectInfoBO);
 
+    List<SubjectInfoBO> convertListInfoToBO(List<SubjectInfo> subjectInfoList);
 }

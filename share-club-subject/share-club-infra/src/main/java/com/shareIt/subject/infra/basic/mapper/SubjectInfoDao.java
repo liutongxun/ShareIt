@@ -55,12 +55,32 @@ public interface SubjectInfoDao {
      */
     int insertBatch(@Param("entities") List<SubjectInfo> entities);
 
-/**
- * Insert or update multiple records in a batch, based on primary key.
- * Uses MyBatis's native foreach method.
- *
- * @param entities List of SubjectInfo instances to upsert
- * @return Number of rows affected
-*/
+    /**
+     * Counts the number of subjects that match the specified conditions.
+     *
+     * @param subjectInfo The subject information used as filter criteria (annotated as "subjectInfo").
+     * @param categoryId The ID of the category to filter by (annotated as "categoryId").
+     * @param labelId The ID of the label to filter by (annotated as "labelId").
+     * @return The total number of subjects that meet the conditions.
+     */
+    int countByCondition(@Param("subjectInfo") SubjectInfo subjectInfo,
+                         @Param("categoryId") Long categoryId,
+                         @Param("labelId") Long labelId);
+
+    /**
+     * Retrieves a paginated list of subjects based on the specified filter conditions.
+     *
+     * @param subjectInfo The subject filter criteria (annotated as "subjectInfo").
+     * @param categoryId The ID of the category to filter by (annotated as "categoryId").
+     * @param labelId The ID of the label to filter by (annotated as "labelId").
+     * @param start The starting index for pagination (annotated as "start").
+     * @param pageSize The number of records to retrieve per page (annotated as "pageSize").
+     * @return A list of SubjectInfo objects that match the given criteria within the specified page range.
+     */
+    List<SubjectInfo> queryPage(@Param("subjectInfo") SubjectInfo subjectInfo,
+                                @Param("categoryId") Long categoryId,
+                                @Param("labelId") Long labelId,
+                                @Param("start") int start,
+                                @Param("pageSize") Integer pageSize);
 
 }

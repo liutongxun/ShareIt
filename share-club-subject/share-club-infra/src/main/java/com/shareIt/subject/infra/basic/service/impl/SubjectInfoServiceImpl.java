@@ -29,4 +29,14 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
         this.subjectInfoDao.insert(subjectInfo);
         return subjectInfo;
     }
+
+    @Override
+    public int countByCondition(SubjectInfo subjectInfo, Long categoryId, Long labelId) {
+        return this.subjectInfoDao.countByCondition(subjectInfo, categoryId, labelId);
+    }
+
+    @Override
+    public List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, int start, Integer pageSize) {
+        return this.subjectInfoDao.queryPage(subjectInfo, categoryId, labelId, start, pageSize);
+    }
 }
