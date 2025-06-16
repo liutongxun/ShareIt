@@ -22,4 +22,53 @@
     </insert>
 
 
+    <!--
+    Select specific rows from the subject_brief table based on given conditions.
+    This dynamic SQL query will include WHERE clauses only for non-null (and non-empty where applicable) fields.
+
+    Parameters:
+    - id: filters by the primary key ID of the record
+    - subjectId: filters by the associated subject's ID
+    - subjectAnswer: filters by the text of the subject answer (only if not null or empty)
+    - createdBy: filters by the creator of the record (only if not null or empty)
+    - createdTime: filters by the creation timestamp
+    - updateBy: filters by the user who last updated the record (only if not null or empty)
+    - updateTime: filters by the last update timestamp
+    - isDeleted: filters by the deletion flag (typically 0 for active, 1 for deleted)
+
+    Result:
+    - Returns a list of SubjectBrief records matching the specified conditions.
+-->
+    <select id="queryAllByLimit" resultMap="SubjectBriefMap">
+        select
+        id, subject_id, subject_answer, created_by, created_time, update_by, update_time, is_deleted
+        from subject_brief
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="subjectAnswer != null and subjectAnswer != ''">
+                and subject_answer = #{subjectAnswer}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
 </mapper>

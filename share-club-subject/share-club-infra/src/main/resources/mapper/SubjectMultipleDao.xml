@@ -22,5 +22,63 @@
         </foreach>
     </insert>
 
+
+    <!--
+    Query specific rows from the subject_multiple table based on provided conditions.
+    This dynamic SQL query builds the WHERE clause using only the non-null (and non-empty) fields.
+
+    Parameters:
+    - id: filter by the unique identifier of the record
+    - subjectId: filter by the associated subject's ID
+    - optionType: filter by the type of the option (e.g., single-choice, multiple-choice)
+    - optionContent: filter by the text/content of the option (only if not null or empty)
+    - isCorrect: filter by whether the option is marked as correct (true/false)
+    - createdBy: filter by the user who created the record (only if not null or empty)
+    - createdTime: filter by the record creation timestamp
+    - updateBy: filter by the user who last updated the record (only if not null or empty)
+    - updateTime: filter by the record's last update timestamp
+    - isDeleted: filter by the deletion status (e.g., 0 for active, 1 for deleted)
+
+    Result:
+    - Returns a list of SubjectMultiple records that match the specified conditions.
+-->
+    <select id="queryAllByLimit" resultMap="SubjectMultipleMap">
+        select
+        id, subject_id, option_type, option_content, is_correct, created_by, created_time, update_by, update_time, is_deleted
+        from subject_multiple
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="optionType != null">
+                and option_type = #{optionType}
+            </if>
+            <if test="optionContent != null and optionContent != ''">
+                and option_content = #{optionContent}
+            </if>
+            <if test="isCorrect != null">
+                and is_correct = #{isCorrect}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
 </mapper>
 

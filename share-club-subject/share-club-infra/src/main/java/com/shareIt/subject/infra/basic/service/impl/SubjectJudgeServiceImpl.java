@@ -31,4 +31,9 @@ public class SubjectJudgeServiceImpl implements SubjectJudgeService {
         this.subjectJudgeDao.insert(subjectJudge);
         return subjectJudge;
     }
+
+    @Override
+    public List<SubjectJudge> queryByCondition(SubjectJudge subjectJudge) {
+        return this.subjectJudgeDao.queryAllByLimit(subjectJudge);
+    }
 }

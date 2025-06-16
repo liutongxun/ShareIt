@@ -24,4 +24,14 @@ public interface SubjectBriefDao {
     int insert(SubjectBrief subjectBrief);
 
 
+    /**
+     * Query a list of subject briefs with pagination constraints.
+     * This method retrieves a limited number of SubjectBrief records based on the given conditions,
+     * such as offset and limit for paginated results.
+     *
+     * @param subjectBrief an object containing filter criteria and pagination parameters (e.g., page number, page size)
+     * @return a list of SubjectBrief objects that meet the specified conditions and limits
+     */
+    SubjectBrief queryAllByLimit(SubjectBrief subjectBrief);
+
 }

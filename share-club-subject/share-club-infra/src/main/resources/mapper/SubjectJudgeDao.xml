@@ -20,6 +20,55 @@
     </insert>
 
 
+    <!--
+    Query specific rows from the subject_judge table based on provided conditions.
+    This dynamic SQL generates WHERE clauses only for non-null (and non-empty where applicable) fields.
+
+    Parameters:
+    - id: filter by the primary key ID of the record
+    - subjectId: filter by the associated subject's ID
+    - isCorrect: filter by whether the judgment is correct (e.g., true or false)
+    - createdBy: filter by the user who created the record (ignored if null or empty)
+    - createdTime: filter by the creation timestamp
+    - updateBy: filter by the user who last updated the record (ignored if null or empty)
+    - updateTime: filter by the last update timestamp
+    - isDeleted: filter by deletion flag (e.g., 0 for active, 1 for deleted)
+
+    Result:
+    - Returns a list of SubjectJudge records that match the given conditions.
+-->
+    <select id="queryAllByLimit" resultMap="SubjectJudgeMap">
+        select
+        id, subject_id, is_correct, created_by, created_time, update_by, update_time, is_deleted
+        from subject_judge
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="isCorrect != null">
+                and is_correct = #{isCorrect}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
 
 </mapper>
 

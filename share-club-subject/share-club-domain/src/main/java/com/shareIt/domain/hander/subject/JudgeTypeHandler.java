@@ -1,8 +1,10 @@
 package com.shareIt.domain.hander.subject;
 
 
+import com.shareIt.domain.convert.JudgeSubjectConverter;
 import com.shareIt.domain.entity.SubjectAnswerBO;
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.common.enums.SubjectInfoTypeEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectJudge;
@@ -43,6 +45,17 @@ public class JudgeTypeHandler implements SubjectTypeHandler{
             subjectJudgeService.insert(subjectJudge);
         }
 
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectJudge subjectJudge = new SubjectJudge();
+        subjectJudge.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectJudge> result = subjectJudgeService.queryByCondition(subjectJudge);
+        List<SubjectAnswerBO> subjectAnswerBOList = JudgeSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 
 }

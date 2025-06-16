@@ -47,4 +47,12 @@ public interface SubjectInfoService {
     List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, int start, Integer pageSize);
 
 
+    /**
+     * Query subject information by ID
+     *
+     * @param id the unique identifier of the subject
+     * @return the subject information corresponding to the given ID
+     */
+    SubjectInfo queryById(Long id);
+
 }

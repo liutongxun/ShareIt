@@ -23,6 +23,12 @@ public class SubjectBriefServiceImpl implements SubjectBriefService {
 
     @Override
     public SubjectBrief insert(SubjectBrief subjectBrief) {
-        return null;
+        this.subjectBriefDao.insert(subjectBrief);
+        return subjectBrief;
+    }
+
+    @Override
+    public SubjectBrief queryByCondition(SubjectBrief subjectBrief) {
+        return this.subjectBriefDao.queryAllByLimit(subjectBrief);
     }
 }

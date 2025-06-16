@@ -21,7 +21,7 @@ import java.util.List;
 
 @Slf4j
 @RestController()
-@RequestMapping("/SubjectController")
+@RequestMapping("/subject/subject")
 public class SubjectController {
 
     @Resource
@@ -85,6 +85,7 @@ public class SubjectController {
             }
             Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "Category ID cannot be null");
             Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "Label ID cannot be null");
+
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDTOToBO(subjectInfoDTO);
             subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo());
             subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize());
@@ -95,6 +96,40 @@ public class SubjectController {
             return Result.fail("Failed to retrieve subject list with pagination");
         }
     }
+
+
+    /**
+     * Queries subject information based on the provided subject ID.
+     *
+     * @param subjectInfoDTO The Data Transfer Object (DTO) containing subject query parameters
+     * @return A Result containing the SubjectInfoDTO with the subject details, or an error message if the query fails
+     */
+    @PostMapping("/querySubjectInfo")
+    public Result<SubjectInfoDTO> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.querySubjectInfo.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+            Preconditions.checkNotNull(subjectInfoDTO.getId(), "Subject ID cannot be null");
+            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "Category ID cannot be null");
+            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "Label ID cannot be null");
+
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDTOToBO(subjectInfoDTO);
+
+            System.out.printf(subjectInfoBO.toString());
+
+            SubjectInfoBO boResult = subjectInfoDomainService.querySubjectInfo(subjectInfoBO);
+
+            SubjectInfoDTO dto = SubjectInfoDTOConverter.INSTANCE.convertBOToDTO(boResult);
+
+            return Result.ok(dto);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.add.error:{}", e.getMessage(), e);
+            return Result.fail("Failed to query subject details");
+        }
+    }
+
+
 
 
 }

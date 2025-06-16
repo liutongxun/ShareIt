@@ -23,4 +23,12 @@ public interface SubjectBriefService {
     SubjectBrief insert(SubjectBrief subjectBrief);
 
 
+    /**
+     * Query a subject brief based on specific conditions.
+     * This method retrieves a SubjectBrief object that matches the provided criteria.
+     *
+     * @param subjectBrief an object containing the query conditions (e.g., subjectId, label, status)
+     * @return the SubjectBrief that matches the specified conditions, or null if no match is found
+     */
+    SubjectBrief queryByCondition(SubjectBrief subjectBrief);
 }

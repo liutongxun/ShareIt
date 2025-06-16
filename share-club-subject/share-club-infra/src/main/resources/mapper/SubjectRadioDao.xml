@@ -15,4 +15,70 @@
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into subject_radio(subject_id, option_type, option_content, is_correct, created_by, created_time, update_by, update_time, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.subjectId}, #{entity.optionType}, #{entity.optionContent}, #{entity.isCorrect}, #{entity.createdBy}, #{entity.createdTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+        </foreach>
+    </insert>
+
+
+    <!--
+    Query specific rows from the subject_radio table based on provided filter conditions.
+    This dynamic SQL query constructs the WHERE clause using only non-null (and non-empty where applicable) fields.
+
+    Parameters:
+    - id: filters by the primary key of the record
+    - subjectId: filters by the associated subject ID
+    - optionType: filters by the type of the option (e.g., single-choice, etc.)
+    - optionContent: filters by the text content of the option (only if not null or empty)
+    - isCorrect: filters by whether the option is marked as correct (true/false)
+    - createdBy: filters by the creator of the record (only if not null or empty)
+    - createdTime: filters by the creation timestamp
+    - updateBy: filters by the last person who updated the record (only if not null or empty)
+    - updateTime: filters by the last update timestamp
+    - isDeleted: filters by deletion status (e.g., 0 for active, 1 for deleted)
+
+    Result:
+    - Returns a list of SubjectRadio records that meet the specified conditions.
+-->
+    <select id="queryAllByLimit" resultMap="SubjectRadioMap">
+        select
+        id, subject_id, option_type, option_content, is_correct, created_by, created_time, update_by, update_time, is_deleted
+        from subject_radio
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="optionType != null">
+                and option_type = #{optionType}
+            </if>
+            <if test="optionContent != null and optionContent != ''">
+                and option_content = #{optionContent}
+            </if>
+            <if test="isCorrect != null">
+                and is_correct = #{isCorrect}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
 </mapper>

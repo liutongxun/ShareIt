@@ -19,6 +19,26 @@
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
+
+    <!-- Query a single record by ID -->
+    <select id="queryById" resultMap="SubjectInfoMap">
+        <!-- Select the columns from the subject_info table where the ID matches the given parameter -->
+        select id,                    <!-- Subject ID -->
+        subject_name,          <!-- Subject name -->
+        subject_difficult,     <!-- Subject difficulty -->
+        settle_name,           <!-- Author's name (settler) -->
+        subject_type,          <!-- Subject type (e.g., 1 - Single Choice, 2 - Multiple Choice, etc.) -->
+        subject_score,         <!-- Score for the subject -->
+        subject_parse,         <!-- Explanation for the subject -->
+        created_by,            <!-- The creator of the subject -->
+        created_time,          <!-- Time when the subject was created -->
+        update_by,             <!-- The person who last updated the subject -->
+        update_time,           <!-- Time of the last update -->
+        is_deleted             <!-- Whether the subject is deleted (1 - deleted, 0 - not deleted) -->
+        from subject_info              <!-- From the subject_info table -->
+        where id = #{id}               <!-- Where the subject ID matches the provided parameter -->
+    </select>
+
     <!-- Insert all columns -->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         <!-- Retrieve the ID of the newly inserted record -->

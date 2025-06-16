@@ -2,6 +2,7 @@ package com.shareIt.domain.hander.subject;
 
 
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.common.enums.SubjectInfoTypeEnum;
 /**
  * Strategy interface for handling different types of questions.
@@ -26,6 +27,15 @@ public interface SubjectTypeHandler {
      * @param subjectInfoBO the business object representing the question to be inserted
      */
     void add(SubjectInfoBO subjectInfoBO);
+
+
+    /**
+     * Query the actual subject options
+     *
+     * @param subjectId the ID of the subject
+     * @return the subject option business object
+     */
+    SubjectOptionBO query(int subjectId);
 
 
 }

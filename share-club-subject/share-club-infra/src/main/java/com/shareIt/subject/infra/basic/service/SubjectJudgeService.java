@@ -3,6 +3,8 @@ package com.shareIt.subject.infra.basic.service;
 import com.shareIt.subject.infra.basic.entity.SubjectJudge;
 import com.shareIt.subject.infra.basic.entity.SubjectLabel;
 
+import java.util.List;
+
 /**
  * Service Interface for the True/False Question (SubjectJudge) Table
  *
@@ -22,4 +24,5 @@ public interface SubjectJudgeService {
     SubjectJudge insert(SubjectJudge subjectJudge);
 
 
+    List<SubjectJudge> queryByCondition(SubjectJudge subjectJudge);
 }

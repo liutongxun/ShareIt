@@ -21,4 +21,12 @@ public interface SubjectMultipleDao {
      */
     int insertBatch(@Param("entities") List<SubjectMultiple> entities);
 
+    /**
+     * Query a list of SubjectMultiple records based on specified conditions.
+     * This method is typically used for filtered and paginated queries.
+     *
+     * @param subjectMultiple the filter conditions for the query (e.g., subject ID, option text, status, etc.)
+     * @return a list of SubjectMultiple objects that match the given criteria
+     */
+    List<SubjectMultiple> queryAllByLimit(SubjectMultiple subjectMultiple);
 }

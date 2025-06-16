@@ -32,4 +32,13 @@ public interface SubjectInfoDomainService {
     PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO);
 
 
+    /**
+     * Queries subject information based on the provided SubjectInfoBO object.
+     *
+     * @param subjectInfoBO The Business Object (BO) containing the subject query parameters.
+     * @return The SubjectInfoBO containing the subject details retrieved based on the query parameters.
+     */
+    SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO);
+
 }
+

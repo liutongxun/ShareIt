@@ -23,5 +23,13 @@ public interface SubjectRadioDao {
      */
     int insertBatch(@Param("entities") List<SubjectRadio> entities);
 
+    /**
+     * Query a list of SubjectRadio records based on specified conditions.
+     * This method retrieves rows that match the given filter criteria, typically used for paginated or conditional queries.
+     *
+     * @param subjectRadio the filter criteria used to query SubjectRadio records (e.g., subject ID, answer content, etc.)
+     * @return a list of SubjectRadio objects that satisfy the given conditions
+     */
+    List<SubjectRadio> queryAllByLimit(SubjectRadio subjectRadio);
 }
 

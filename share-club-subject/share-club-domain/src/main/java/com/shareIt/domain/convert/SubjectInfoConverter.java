@@ -2,6 +2,7 @@ package com.shareIt.domain.convert;
 
 
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.infra.basic.entity.SubjectInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -32,4 +33,6 @@ public interface SubjectInfoConverter {
     SubjectInfo convertBoToInfo(SubjectInfoBO subjectInfoBO);
 
     List<SubjectInfoBO> convertListInfoToBO(List<SubjectInfo> subjectInfoList);
+
+    SubjectInfoBO convertOptionAndInfoToBo(SubjectOptionBO optionBO, SubjectInfo subjectInfo);
 }

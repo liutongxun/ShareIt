@@ -3,6 +3,7 @@ package com.shareIt.domain.hander.subject;
 import com.shareIt.domain.convert.MultipleSubjectConverter;
 import com.shareIt.domain.entity.SubjectAnswerBO;
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.common.enums.SubjectInfoTypeEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectJudge;
@@ -56,6 +57,17 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
             subjectMultipleService.batchInsert(multiples);
         }
 
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectMultiple subjectMultiple = new SubjectMultiple();
+        subjectMultiple.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectMultiple> result = subjectMultipleService.queryByCondition(subjectMultiple);
+        List<SubjectAnswerBO> subjectAnswerBOList = MultipleSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 
 }

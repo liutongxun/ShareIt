@@ -3,6 +3,7 @@ package com.shareIt.domain.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.shareIt.domain.convert.SubjectInfoConverter;
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.domain.hander.subject.SubjectTypeHandler;
 import com.shareIt.domain.hander.subject.SubjectTypeHandlerFactory;
 import com.shareIt.domain.service.SubjectInfoDomainService;
@@ -12,6 +13,7 @@ import com.shareIt.subject.infra.basic.entity.SubjectInfo;
 import com.shareIt.subject.infra.basic.entity.SubjectLabel;
 import com.shareIt.subject.infra.basic.entity.SubjectMapping;
 import com.shareIt.subject.infra.basic.service.SubjectInfoService;
+import com.shareIt.subject.infra.basic.service.SubjectLabelService;
 import com.shareIt.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
 
     @Resource
     private SubjectInfoService subjectInfoService;
+
+    @Resource
+    private SubjectLabelService subjectLabelService;
 
     @Resource
     private SubjectMappingService subjectMappingService;
@@ -96,6 +101,25 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         return pageResult;
     }
 
+    @Override
+    public SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO) {
+
+        SubjectInfo subjectInfo = subjectInfoService.queryById(subjectInfoBO.getId());
+        SubjectTypeHandler handler = subjectTypeHandlerFactory.getHandler(subjectInfo.getSubjectType());
+        SubjectOptionBO optionBO = handler.query(subjectInfo.getId().intValue());
+        SubjectInfoBO bo =  SubjectInfoConverter.INSTANCE.convertOptionAndInfoToBo(optionBO, subjectInfo);
+        SubjectMapping subjectMapping = new SubjectMapping();
+        subjectMapping.setSubjectId(subjectInfo.getId());
+        subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
+        List<Long> labelIdList = mappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        List<SubjectLabel> labelList = subjectLabelService.batchQueryById(labelIdList);
+        List<String> labelNameList = labelList.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
+        bo.setLabelName(labelNameList);
+
+
+        return bo ;
+    }
 
 
 }

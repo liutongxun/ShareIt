@@ -4,6 +4,7 @@ package com.shareIt.domain.hander.subject;
 import com.shareIt.domain.convert.RadioSubjectConverter;
 import com.shareIt.domain.entity.SubjectAnswerBO;
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.common.enums.SubjectInfoTypeEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectJudge;
@@ -60,6 +61,17 @@ public class RadioTypeHandler implements SubjectTypeHandler {
             subjectRadioService.batchInsert(subjectRadioList);
         }
 
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectRadio subjectRadio = new SubjectRadio();
+        subjectRadio.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectRadio> result = subjectRadioService.queryByCondition(subjectRadio);
+        List<SubjectAnswerBO> subjectAnswerBOList = RadioSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 
 }

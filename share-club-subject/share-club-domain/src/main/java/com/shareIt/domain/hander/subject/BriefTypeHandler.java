@@ -3,6 +3,7 @@ package com.shareIt.domain.hander.subject;
 
 import com.shareIt.domain.convert.BriefSubjectConverter;
 import com.shareIt.domain.entity.SubjectInfoBO;
+import com.shareIt.domain.entity.SubjectOptionBO;
 import com.shareIt.subject.common.enums.IsDeletedFlagEnum;
 import com.shareIt.subject.common.enums.SubjectInfoTypeEnum;
 import com.shareIt.subject.infra.basic.entity.SubjectBrief;
@@ -35,6 +36,16 @@ public class BriefTypeHandler implements SubjectTypeHandler{
         subjectBrief.setSubjectId(subjectInfoBO.getId().intValue());
         subjectBrief.setIsDeleted( IsDeletedFlagEnum.UN_DELETED.getCode());
         subjectBriefService.insert(subjectBrief);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectBrief subjectBrief = new SubjectBrief();
+        subjectBrief.setSubjectId(subjectId);
+        SubjectBrief result = subjectBriefService.queryByCondition(subjectBrief);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setSubjectAnswer(result.getSubjectAnswer());
+        return subjectOptionBO;
     }
 
 }
