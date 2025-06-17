@@ -17,8 +17,10 @@ import com.shareIt.subject.infra.basic.service.SubjectLabelService;
 import com.shareIt.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,16 +42,22 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     private SubjectMappingService subjectMappingService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SubjectInfoBO subjectInfoBO) {
         if (log.isInfoEnabled()) {
             log.info("SubjectInfoDomainServiceImpl.add.bo:{}", JSON.toJSONString(subjectInfoBO));
         }
         SubjectInfo subjectInfo = SubjectInfoConverter.INSTANCE.
                                                         convertBoToInfo(subjectInfoBO);
+
+        subjectInfo.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+
         subjectInfoService.insert(subjectInfo);
 
         SubjectTypeHandler handler = subjectTypeHandlerFactory.
                                                     getHandler(subjectInfo.getSubjectType());
+
+        subjectInfoBO.setId(subjectInfo.getId());
 
         handler.add(subjectInfoBO);
 
@@ -105,16 +113,29 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     public SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO) {
 
         SubjectInfo subjectInfo = subjectInfoService.queryById(subjectInfoBO.getId());
+        // Check if subjectInfo is null to avoid NullPointerException
+        if (subjectInfo == null) {
+            // If subjectInfo is null, throw an exception or return a suitable error message
+            // In this case, an EntityNotFoundException is thrown with a custom message
+            throw new EntityNotFoundException("Subject info not found for id: " + subjectInfoBO.getId());
+        }
+
         SubjectTypeHandler handler = subjectTypeHandlerFactory.getHandler(subjectInfo.getSubjectType());
         SubjectOptionBO optionBO = handler.query(subjectInfo.getId().intValue());
+
         SubjectInfoBO bo =  SubjectInfoConverter.INSTANCE.convertOptionAndInfoToBo(optionBO, subjectInfo);
+
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setSubjectId(subjectInfo.getId());
         subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+
         List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
-        List<Long> labelIdList = mappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        List<Long> labelIdList = mappingList.stream().
+                            map(SubjectMapping::getLabelId).collect(Collectors.toList());
+
         List<SubjectLabel> labelList = subjectLabelService.batchQueryById(labelIdList);
-        List<String> labelNameList = labelList.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
+        List<String> labelNameList = labelList.stream().
+                            map(SubjectLabel::getLabelName).collect(Collectors.toList());
         bo.setLabelName(labelNameList);
 
 
