@@ -1,0 +1,6 @@
+server:
+  port: 4000
+minio:
+  url: http://localhost:9090
+  accessKey: minioadmin
+  secretKey: minioadmin
