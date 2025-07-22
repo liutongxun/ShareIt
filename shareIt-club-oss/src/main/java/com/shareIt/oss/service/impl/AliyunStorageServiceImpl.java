@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.List;
 
-@Service
+//@Service
 public class AliyunStorageServiceImpl implements StorageService {
 
 

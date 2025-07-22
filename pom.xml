@@ -10,6 +10,16 @@
     <packaging>pom</packaging>
     <modules>
         <module>share-club-subject</module>
+        <module>shareIt-club-auth</module>
+        <module>shareIt-club-auth/shareIt-club-auth-api</module>
+        <module>shareIt-club-auth/shareIt-club-auth-application</module>
+        <module>shareIt-club-auth/shareIt-club-auth-application/shareIt-club-auth-application-controller</module>
+        <module>shareIt-club-auth/shareIt-club-auth-application/shareIt-club-auth-application-job</module>
+        <module>shareIt-club-auth/shareIt-club-auth-application/shareIt-club-auth-application-mq</module>
+        <module>shareIt-club-auth/shareIt-club-auth-common</module>
+        <module>shareIt-club-auth/shareIt-club-auth-domain</module>
+        <module>shareIt-club-auth/shareIt-club-auth-infra</module>
+        <module>shareIt-club-auth/shareIt-club-auth-starter</module>
     </modules>
 
     <properties>
