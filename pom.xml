@@ -20,6 +20,7 @@
         <module>shareIt-club-auth/shareIt-club-auth-domain</module>
         <module>shareIt-club-auth/shareIt-club-auth-infra</module>
         <module>shareIt-club-auth/shareIt-club-auth-starter</module>
+        <module>shareIt-club-gateway</module>
     </modules>
 
     <properties>
