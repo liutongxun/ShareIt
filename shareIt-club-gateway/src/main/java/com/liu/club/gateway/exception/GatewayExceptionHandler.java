@@ -4,7 +4,9 @@ import cn.dev33.satoken.exception.SaTokenException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liu.club.gateway.entity.Result;
+import lombok.val;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -14,10 +16,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 网关全局异常处理
+ * Global Exception Handling for Gateway
  *
- * @author: ChickenWing
- * @date: 2023/10/28
+ * @author: Liu Tongxun
+ * @date: 2025/07/27
  */
 @Component
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
@@ -41,6 +43,17 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         }
         Result result = Result.fail(code, message);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+//
+//        byte[] valueAsBytes = null;
+//        try {
+//            valueAsBytes = objectMapper.writeValueAsBytes(result);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//        DataBuffer dataBuffer = response.bufferFactory().wrap(valueAsBytes);
+//        return response.writeWith(Mono.just(dataBuffer));
+
+
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory dataBufferFactory = response.bufferFactory();
             byte[] bytes = null;
@@ -52,5 +65,4 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
             return dataBufferFactory.wrap(bytes);
         }));
     }
-
 }
