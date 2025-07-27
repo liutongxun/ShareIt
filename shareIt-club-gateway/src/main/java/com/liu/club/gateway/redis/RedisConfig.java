@@ -14,34 +14,62 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * Redis的config处理
+ * Redis Configuration Handling
  *
- * @author: ChickenWing
- * @date: 2023/10/28
+ * @author: Liu Tongxun
+ * @date: 2025/07/27
  */
 @Configuration
 public class RedisConfig {
 
+    /**
+     * Create and configure a RedisTemplate for serializing keys as Strings
+     * and values as JSON using Jackson.
+     *
+     * @param redisConnectionFactory the factory for Redis connections
+     * @return a configured RedisTemplate<String, Object> instance
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+
+        // Use String serialization for keys and hash keys
+        RedisSerializer<String> stringSerializer = new StringRedisSerializer();
+
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(redisSerializer);
-        redisTemplate.setHashKeySerializer(redisSerializer);
+        redisTemplate.setKeySerializer(stringSerializer);
+        redisTemplate.setHashKeySerializer(stringSerializer);
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer());
+
         return redisTemplate;
     }
 
+    /**
+     * Build a Jackson2JsonRedisSerializer configured to:
+     * - Include all fields of the target objects
+     * - Ignore unknown properties during deserialization
+     * - Embed type information for non-final classes
+     *
+     * @return a configured Jackson2JsonRedisSerializer<Object>
+     */
     private Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer() {
-        Jackson2JsonRedisSerializer<Object> jsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        Jackson2JsonRedisSerializer<Object> jacksonSerializer =
+                new Jackson2JsonRedisSerializer<>(Object.class);
+
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        // Make all fields visible for serialization/deserialization
+        objectMapper.setVisibility(PropertyAccessor.ALL,
+                JsonAutoDetect.Visibility.ANY);
+
+        // Do not fail on unknown properties
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        // Include type information to support polymorphic types
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        jsonRedisSerializer.setObjectMapper(objectMapper);
-        return jsonRedisSerializer;
+
+        jacksonSerializer.setObjectMapper(objectMapper);
+        return jacksonSerializer;
     }
 
 }
