@@ -1,4 +1,4 @@
-package com.liu.auth.application.controller;
+package com.liu.auth.entity;
 
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ public enum ResultCodeEnum {
 
     public String desc;
 
-    ResultCodeEnum(int code, String desc){
+    ResultCodeEnum(int code,String desc){
         this.code = code;
         this.desc = desc;
     }

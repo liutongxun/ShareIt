@@ -1,5 +1,4 @@
-package com.liu.auth.application.controller;
-
+package com.liu.auth.entity;
 
 import lombok.Data;
 
