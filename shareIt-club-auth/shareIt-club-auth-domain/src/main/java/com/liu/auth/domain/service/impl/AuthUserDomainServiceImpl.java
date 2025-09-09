@@ -31,14 +31,37 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
 
 
 
+    @Resource
+    private AuthRoleService authRoleService;
+
+    @Resource
+    private AuthUserRoleService authUserRoleService;
+
+
+    private String salt = "shareIt";
+
     @Override
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
     public Boolean register(AuthUserBO authUserBO) {
 
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
-
+        authUser.setPassword(SaSecureUtil.md5BySalt(authUser.getPassword(), salt));
+        authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
+        authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         Integer count = authUserService.insert(authUser);
+
+        AuthRole authRole = new AuthRole();
+        authRole.setRoleKey(AuthConstant.NORMAL_USER);
+        AuthRole roleResult = authRoleService.queryByCondition(authRole);
+        Long roleId = roleResult.getId();
+        Long userId = authUser.getId();
+        AuthUserRole authUserRole = new AuthUserRole();
+        authUserRole.setUserId(userId);
+        authUserRole.setRoleId(roleId);
+        authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        authUserRoleService.insert(authUserRole);
+
 
         return count > 0;
     }
@@ -47,8 +70,6 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     public Boolean update(AuthUserBO authUserBO) {
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
 
-        authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
-        authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
 
         Integer count = authUserService.updateByUserName(authUser);
         return count > 0;
