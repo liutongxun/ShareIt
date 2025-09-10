@@ -5,10 +5,10 @@ import com.liu.auth.domain.entity.AuthPermissionBO;
 import java.util.List;
 
 /**
- * 角色领域service
- * 
- * @author: ChickenWing
- * @date: 2023/11/1
+ * Role Domain Service
+ *
+ * @author Liu Tongxun
+ * @date 2025/09/10
  */
 public interface AuthPermissionDomainService {
 
