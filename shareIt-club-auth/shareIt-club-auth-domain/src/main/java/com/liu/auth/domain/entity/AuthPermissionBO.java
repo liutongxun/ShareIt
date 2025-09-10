@@ -5,10 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 权限dto
- * 
- * @author: ChickenWing
- * @date: 2023/11/3
+ * permission dto
+ *
+ * @author Liu Tongxun
+ * @date 2025/09/10
  */
 @Data
 public class AuthPermissionBO implements Serializable {
